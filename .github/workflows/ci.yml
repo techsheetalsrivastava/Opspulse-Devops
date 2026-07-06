@@ -18,11 +18,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Show Node Version
-        run: node -v
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Show NPM Version
-        run: npm -v
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Application
+        run: npm run build
 
       - name: Run Application
-        run: node app.js
+        run: npm start

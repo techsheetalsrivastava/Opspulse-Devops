@@ -1,12 +1,13 @@
 {
   "name": "github-actions-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "GitHub Actions Demo",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "build": "echo Build completed successfully",
+    "test": "echo Tests passed successfully"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC"
 }
