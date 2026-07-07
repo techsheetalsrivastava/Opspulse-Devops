@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  APP_NAME: ${{ vars.APP_NAME }}
+  ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+  NODE_VERSION: ${{ vars.NODE_VERSION }}      
+
 jobs:
   build:
     runs-on: ubuntu-latest
