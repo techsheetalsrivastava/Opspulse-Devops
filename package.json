@@ -2,9 +2,9 @@
   "name": "github-actions-demo",
   "version": "1.0.0",
   "description": "GitHub Actions Demo",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/app.js",
     "build": "mkdir -p dist && echo \"Build completed successfully\" > dist/build.txt",
     "test": "echo \"Tests passed successfully\""
   },
