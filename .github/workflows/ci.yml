@@ -21,20 +21,21 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
       - name: Display Repository Variables
-  run: |
-    echo "Application Name: ${{ vars.APP_NAME }}"
-    echo "Environment: ${{ vars.ENVIRONMENT }}"
-    echo "Node Version: ${{ vars.NODE_VERSION }}" 
+        run: |
+          echo "Application Name: ${{ vars.APP_NAME }}"
+          echo "Environment: ${{ vars.ENVIRONMENT }}"
+          echo "Node Version: ${{ vars.NODE_VERSION }}"
 
       - name: Validate Secret
-  run: |
-    if [ -n "${{ secrets.ENV_SECRET }}" ]; then
-      echo "Secret is available."
-    else
-      echo "Secret is missing."
-      exit 1
-    fi  
+        run: |
+          if [ -n "${{ secrets.ENV_SECRET }}" ]; then
+            echo "Secret is available."
+          else
+            echo "Secret is missing."
+            exit 1
+          fi
 
       - name: Build Application
         run: npm run build
