@@ -8,7 +8,8 @@ on:
 env:
   APP_NAME: ${{ vars.APP_NAME }}
   ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-  NODE_VERSION: ${{ vars.NODE_VERSION }}      
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
+        
 
 jobs:
   build:
@@ -21,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install Dependencies
@@ -29,9 +30,9 @@ jobs:
 
       - name: Display Repository Variables
         run: |
-          echo "Application Name: ${{ vars.APP_NAME }}"
-          echo "Environment: ${{ vars.ENVIRONMENT }}"
-          echo "Node Version: ${{ vars.NODE_VERSION }}"
+          echo "Application Name: $APP_NAME"
+          echo "Environment: $ENVIRONMENT"
+          echo "Node Version: $NODE_VERSION"
 
       - name: Validate Secret
         run: |
@@ -45,9 +46,22 @@ jobs:
       - name: Build Application
         run: npm run build
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build Docker Image
         run: |
-          docker build -t opspulse:${{ github.sha }} .  
+          docker build -t ghcr.io/${{ github.repository_owner }}/opspulse:${{ github.sha }} .
+          docker tag ghcr.io/${{ github.repository_owner }}/opspulse:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/opspulse:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/opspulse:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository_owner }}/opspulse:latest  
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
@@ -66,7 +80,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install Dependencies
@@ -84,22 +98,4 @@ jobs:
       - name: Run Tests
         run: npm test
 
-  run-app:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Application
-        run: npm start
+  
