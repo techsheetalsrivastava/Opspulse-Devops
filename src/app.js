@@ -2,15 +2,10 @@ const express = require("express");
 const os = require("os");
 const path = require("path");
 const config = require("./config/config");
+const { exec } = require("child_process");
 
 const app = express();
 const PORT = config.port;
-
-const express = require("express");
-const os = require("os");
-const path = require("path");
-const config = require("./config/config");
-const { exec } = require("child_process");
 
 app.use(express.static(path.join(__dirname, "public")));
 
