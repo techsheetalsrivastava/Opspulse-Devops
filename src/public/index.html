@@ -3,41 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpsPulse - DevOps Utility Service</title>
+    <title>OpsPulse Dashboard</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
 <div class="container">
 
-    <h1> OpsPulse 1 </h1>
-    <p class="subtitle">DevOps Utility Service</p>
+    <header>
 
-    <div class="card">
-        <h3>Application Status</h3>
+        <div>
 
-        <p><strong>Status:</strong> <span id="status">Loading...</span></p>
-        <p><strong>Version:</strong> <span id="version">Loading...</span></p>
-        <p><strong>Environment:</strong> <span id="environment">Loading...</span></p>
-        <p><strong>Hostname:</strong> <span id="hostname">Loading...</span></p>
-        <p><strong>Server Time:</strong> <span id="time">Loading...</span></p>
+            <h1>OpsPulse</h1>
+            <p>DevOps Monitoring Dashboard</p>
+
+        </div>
+
+        <div class="status-badge">
+
+            Healthy
+
+        </div>
+
+    </header>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Environment</h3>
+            <span id="environment">Loading...</span>
+        </div>
+
+        <div class="card">
+            <h3>Version</h3>
+            <span id="version">Loading...</span>
+        </div>
+
+        <div class="card">
+            <h3>Hostname</h3>
+            <span id="hostname">Loading...</span>
+        </div>
+
+        <div class="card">
+            <h3>Status</h3>
+            <span id="status">Loading...</span>
+        </div>
+
+    </div>
+
+    <div class="info-card">
+
+        <h2>Deployment Information</h2>
+
+        <div class="info-grid">
+
+            <div>
+                <label>Platform</label>
+                <p>Azure Virtual Machine</p>
+            </div>
+
+            <div>
+                <label>Container Runtime</label>
+                <p>Docker</p>
+            </div>
+
+            <div>
+                <label>Container Registry</label>
+                <p>GitHub Container Registry</p>
+            </div>
+
+            <div>
+                <label>CI/CD</label>
+                <p>GitHub Actions</p>
+            </div>
+
+            <div>
+                <label>Server Time</label>
+                <p id="time">Loading...</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        Powered by
+
+        <span>GitHub Actions</span>
+
+        •
+
+        <span>Docker</span>
+
+        •
+
+        <span>Azure VM</span>
+
+        •
+
+        <span>Node.js</span>
 
     </div>
 
 </div>
 
 <script>
-fetch('/status')
-.then(response => response.json())
-.then(data => {
 
-document.getElementById("status").innerText = data.status;
-document.getElementById("version").innerText = data.version;
-document.getElementById("environment").innerText = data.environment;
-document.getElementById("hostname").innerText = data.hostname;
-document.getElementById("time").innerText = data.serverTime;
+fetch('/status')
+
+.then(response=>response.json())
+
+.then(data=>{
+
+document.getElementById("status").innerText=data.status;
+
+document.getElementById("version").innerText=data.version;
+
+document.getElementById("environment").innerText=data.environment;
+
+document.getElementById("hostname").innerText=data.hostname;
+
+document.getElementById("time").innerText=data.serverTime;
 
 });
+
 </script>
 
 </body>
